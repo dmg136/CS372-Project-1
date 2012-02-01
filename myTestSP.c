@@ -11,23 +11,16 @@ static void stressTest();
 int main(int argc, char **argv)
 {
   SortedPoints *sp1;
-  SortedPoints *sp2;
   Point p1;
 
   sp1 = (SortedPoints*)malloc(sizeof(SortedPoints));
   assert(sp1);
   sp_init(sp1);
-  sp2 = (SortedPoints*)malloc(sizeof(SortedPoints));
-  assert(sp2);
-  sp_init(sp2);
 
   int ret = sp_addNewPoint(sp1, 1.0, 1.0);
   assert(ret);
-  ret = sp_addNewPoint(sp1, 1.0, 1.0);
-  assert(ret);
-  ret =   sp_addNewPoint(sp1, 1.0, 1.0);
-  assert(ret);
 
+  /*
   ret =   sp_addNewPoint(sp2, 3.0, 1.0);
   assert(ret);
   ret =   sp_addNewPoint(sp2, 2.0, 1.0);
@@ -78,8 +71,9 @@ int main(int argc, char **argv)
   sp_deleteDuplicates(sp2);
 
   stressTest();
-
   printf("OK\n");
+
+  */
   return 0;
 }
 

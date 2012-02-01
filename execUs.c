@@ -2,18 +2,19 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <stdio.h>
+#include <assert.h>
 
 #define NUM_PROGRAMS (3)
 
 #define FORKCHLD	(pid_t)0
 #define FORKERR		(pid_t)-1
 
-char * execUs[NUM_PROGRAMS] = {"date", "pwd", "ls"}
+char * execUs[NUM_PROGRAMS] = {"date", "pwd", "ls"};
 
 int main()
 {
 
-   assert(0) /*TBD*/
+   assert(0); /*TBD*/
    return 1;
 
 }
