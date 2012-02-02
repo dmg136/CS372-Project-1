@@ -53,14 +53,17 @@ int main(int argc, char **argv)
   Point *aTemp = (Point*)malloc(sizeof(Point));
   ret = sp_removeFirst(sp1, aTemp);
 
+  printf("----------------------------------\n");
   sp_printArray(sp1);
 
   ret = sp_removeFirst(sp1, aTemp);
 
+  printf("----------------------------------\n");
   sp_printArray(sp1);
 
   ret = sp_removeLast(sp1, aTemp);
 
+  printf("-----------------------------------\n");
   sp_printArray(sp1);
 
   /*

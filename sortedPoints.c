@@ -218,12 +218,9 @@ int sp_removeFirst(SortedPoints *sp, Point *ret)
 	{
 
 		int i;
-		Point firstPoint;
 
 		sp->size = sp->size - 1;
-		firstPoint = sp->pointArray[0];
-
-		*ret = firstPoint;
+		*ret = sp->pointArray[0];
 
 		printf("funct removeFirst ret: (%f, %f)\n", point_getX(ret), point_getY(ret));
 
@@ -234,6 +231,7 @@ int sp_removeFirst(SortedPoints *sp, Point *ret)
 			sp->pointArray[i] = sp->pointArray[i+1];
 		}
 
+		point_set(&(sp->pointArray[sp->size]), 0.0, 0.0);
 		//free(&(sp->pointArray)[sp->size]);
 		return 1;
 	}
@@ -252,9 +250,10 @@ int sp_removeLast(SortedPoints *sp, Point *ret)
 
 	else
 	{
+
 		sp->size = sp->size - 1;
-		ret = &(sp->pointArray)[sp->size];
-		point_set(ret, 0.0, 0.0);
+		*ret = sp->pointArray[sp->size];
+		point_set(&(sp->pointArray[sp->size]), 0.0, 0.0);
 		//free(&(sp->pointArray)[sp->size]);
 		sp->used[sp->size] = 'n';
 		return 1;
