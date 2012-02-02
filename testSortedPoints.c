@@ -28,6 +28,9 @@ int main(int argc, char **argv)
   ret =   sp_addNewPoint(sp1, 1.0, 1.0);
   assert(ret);
 
+  printf("-----------------first 3 sp1--------------\n");
+  sp_printArray(sp1);
+
   ret =   sp_addNewPoint(sp2, 3.0, 1.0);
   assert(ret);
   ret =   sp_addNewPoint(sp2, 2.0, 1.0);
@@ -35,6 +38,9 @@ int main(int argc, char **argv)
   ret =   sp_addNewPoint(sp2, 1.0, 1.0);
   assert(ret);
   
+  printf("-----------------first 3 sp2-----------------\n");
+  sp_printArray(sp2);
+
   ret =   sp_addNewPoint(sp1, 2.0, 2.0);
   assert(ret);
   ret =   sp_addNewPoint(sp1, 2.0, 2.0);
@@ -42,8 +48,18 @@ int main(int argc, char **argv)
   ret =   sp_addNewPoint(sp1, 2.0, 2.0);
   assert(ret);
 
+  printf("------------------second 3 sp1-------------------\n");
+  sp_printArray(sp1);
+
+  printf("--------------------------------------before remove-----------\n");
+
   ret= sp_removeFirst(sp1, &p1);
   assert(ret);
+
+  sp_printArray(sp1);
+
+  printf("the array first element: (%f, %f)\n", point_getX(&(sp1->pointArray)[0]), point_getY(&(sp1->pointArray)[0]));
+  printf("testSortedPoints first remove: (%f, %f)\n", point_getX(&p1), point_getY(&p1));
   assert(point_getX(&p1) == 1.0);
   assert(point_getY(&p1) == 1.0);
   ret = sp_removeIndex(sp1, 2, &p1);

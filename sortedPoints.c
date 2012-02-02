@@ -165,8 +165,8 @@ int sp_addNewPoint(SortedPoints *sp, double x, double y)
 		sp->used[sp->size] = 'y';
 		sp->size = sp->size + 1;
 
-		printf("------------------ size %d ------------------\n", sp->size);
-		sp_printArray(sp);
+		//printf("------------------ size %d ------------------\n", sp->size);
+		//sp_printArray(sp);
 
 		return 1;
 	}
@@ -203,117 +203,6 @@ void sp_printArray(SortedPoints *sp)
 }
 
 /*
-int sp_addNewPoint(SortedPoints *sp, double x, double y)
-{
-  if (sp->size >= 10)
-  {
-	printf("SortedPoint list full\n");
-	return 0;
-  }
-  else
-  {
-
-	Point *originPointer = &originPoint;
-
-	printf("origin point: %f, %f\n", point_getX(originPointer), point_getY(originPointer));
-
-	Point *newPoint = (Point*)malloc(sizeof(Point));
-	point_set(newPoint, x, y);
-
-	double newPointDistance = point_distance(originPointer, newPoint);
-
-	int position;
-	double tempDistance;
-
-	Point tempPoint;
-	Point *tempPointer; 
-	Point swapPoint;
-	Point *swapPointer;
-
-        for (position = 0; position < sp->size; position++)
-	{
-		tempPoint = sp->pointArray[position];
-		tempPointer = &tempPoint;
-
-		if (tempPointer == NULL)
-		{
-			sp->pointArray[position] = *newPoint;
-			sp->size = sp->size + 1;
-			break;
-		}
-
-		tempDistance = point_distance(originPointer, tempPointer);
-		if (newPointDistance < tempDistance)
-		{
-			
-			swapPoint = sp->pointArray[position];
-			swapPointer = &swapPoint;
-			sp->pointArray[position] = *newPoint;
-
-			while (position < sp->size)
-			{
-				position++;
-				swapPoint = sp->pointArray[position];
-				sp->pointArray[position] = tempPoint;
-				tempPoint = sp->pointArray[position];
-			}
-
-			break;
-		}
-		else if (newPointDistance == tempDistance)
-		{
-			if (point_getX(newPoint) < point_getX(tempPointer))
-			{
-				swapPoint = sp->pointArray[position];
-				swapPointer = &swapPoint;
-				sp->pointArray[position] = *newPoint;
-
-				while (position < sp->size)
-				{
-					position++;
-					swapPoint = sp->pointArray[position];
-					sp->pointArray[position] = tempPoint;
-					tempPoint = sp->pointArray[position];
-				}
-
-				break;
-	
-			}
-			else if (point_getX(newPoint) == point_getX(tempPointer))
-			{
-				if (point_getY(newPoint) < point_getY(tempPointer))
-				{
-					swapPoint = sp->pointArray[position];
-					swapPointer = &swapPoint;
-					sp->pointArray[position] = *newPoint;
-
-					while (position < sp->size)
-					{
-						position++;
-						swapPoint = sp->pointArray[position];
-						sp->pointArray[position] = tempPoint;
-						tempPoint = sp->pointArray[position];
-					}
-
-					break;
-				}
-				
-				else if (point_getY(newPoint) == point_getY(tempPointer))
-				{
-					position++;
-				}
-			}
-		}
-        }
-	sp->size = sp->size + 1;
-	free(tempPointer);
-	free(swapPointer);
-	return 1;
-  
-}
-*/
-
-/*
   * Remove the first point from the sorted list,
   * storing its value in *ret. Returns 1 on success
   * and 0 on failure (empty list).
@@ -321,37 +210,35 @@ int sp_addNewPoint(SortedPoints *sp, double x, double y)
 
 int sp_removeFirst(SortedPoints *sp, Point *ret)
 {
-	assert(0);
-	return 0;
-}
 
-/*
-int sp_removeFirst(SortedPoints *sp, Point *ret)
-{
-  //don't forget to free point!
-  Point temp;  
-  if (sp->size == 0)
-  	return 0;
-  else {
+	if (sp->size == 0)
+		return 0;
 
-	int i;
+	else
+	{
 
-	//get first point and assign to ret
-	temp = sp->pointArray[0];
-	ret = &temp;
-	
-	free(ret);
+		int i;
+		Point firstPoint;
 
-	for (i = 1; i < sp->size; i++) {
-		sp->pointArray[i-1] = sp->pointArray[i];	
+		sp->size = sp->size - 1;
+		firstPoint = sp->pointArray[0];
+
+		*ret = firstPoint;
+
+		printf("funct removeFirst ret: (%f, %f)\n", point_getX(ret), point_getY(ret));
+
+		sp->used[sp->size] = 'n';
+
+		for (i = 0; i < sp->size; i++)
+		{
+			sp->pointArray[i] = sp->pointArray[i+1];
+		}
+
+		//free(&(sp->pointArray)[sp->size]);
+		return 1;
 	}
-	return 1;
-  }
-  assert(0);
-  return 0;
-
 }
-*/
+
 /*
   * Remove the last point from the sorted list,
   * storing its value in *ret. Returns 1 on success
@@ -360,30 +247,19 @@ int sp_removeFirst(SortedPoints *sp, Point *ret)
 
 int sp_removeLast(SortedPoints *sp, Point *ret)
 {
-	assert(0);
-	return 0;
+	if (sp->size == 0)
+		return 0;
+
+	else
+	{
+		sp->size = sp->size - 1;
+		ret = &(sp->pointArray)[sp->size];
+		point_set(ret, 0.0, 0.0);
+		//free(&(sp->pointArray)[sp->size]);
+		sp->used[sp->size] = 'n';
+		return 1;
+	}
 }
-
-/*
-int sp_removeLast(SortedPoints *sp, Point *ret)
-{
-  Point temp;
-
-  //don't forget to free point!
-  if (sp->size == 0)
-	return 0;
-  else {
-  	temp = sp->pointArray[sp->size - 1];
-	ret = &temp;
-  	free(ret);
-  	sp->size = sp->size - 1;
-  	return 1;
-  }
-
-  assert(0);
-  return 0;
-}
-*/
 
 /*
   * Remove the point that appears in position

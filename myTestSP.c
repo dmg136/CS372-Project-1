@@ -50,6 +50,19 @@ int main(int argc, char **argv)
   printf("sp1 fifth: (%f, %f)\n", point_getX(&temp5), point_getY(&temp5));
   printf("sp1 sixth: (%f, %f)\n", point_getX(&temp6), point_getY(&temp6));
 
+  Point *aTemp = (Point*)malloc(sizeof(Point));
+  ret = sp_removeFirst(sp1, aTemp);
+
+  sp_printArray(sp1);
+
+  ret = sp_removeFirst(sp1, aTemp);
+
+  sp_printArray(sp1);
+
+  ret = sp_removeLast(sp1, aTemp);
+
+  sp_printArray(sp1);
+
   /*
   ret =   sp_addNewPoint(sp2, 3.0, 1.0);
   assert(ret);
