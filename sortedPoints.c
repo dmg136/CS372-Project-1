@@ -6,6 +6,8 @@
 
 Point originPoint = {0.0, 0.0};
 
+void sp_shiftPoints(SortedPoints *sp, int position);
+
 /*
  * Initialize data structures, returning pointer
  * to the object.
@@ -14,6 +16,13 @@ SortedPoints *sp_init(SortedPoints *sp){
 
   //init sp data structure here
   sp->size = 0;
+
+  int position;
+
+  for (position = 0; position < sp->size; position++)
+  {
+	sp->used[position] = 'n';
+  }
 
   return sp;
 }
@@ -40,7 +49,7 @@ int sp_addNewPoint(SortedPoints *sp, double x, double y)
 
 	else
 	{
-		//Point *originPointer = &originPoint;
+		Point *originPointer = &originPoint;
 
 		//printf("origin point: %f, %f\n", point_getX(originPointer), point_getY(originPointer));
 
@@ -55,16 +64,71 @@ int sp_addNewPoint(SortedPoints *sp, double x, double y)
 
 		for (position = 0; position < sp->size; position++)
 		{
-			tempPoint = sp->pointArray[position];
-			tempPointer = &tempPoint;
 
+			if (sp->used[position] == 'n')
+			{
+				sp->pointArray[position] = *newPoint;
+				sp->used[position] = 'y';
+				break;
+			}
+
+			else
+			{
+				tempPoint = sp->pointArray[position];
+				tempPointer = &tempPoint;
+
+				if (point_distance(originPointer, newPoint) == point_distance(originPointer, tempPointer))
+				{
+					if (point_getX(newPoint) == point_getX(tempPointer))
+					{
+						if (point_getY(newPoint) < point_getY(tempPointer))
+						{
+							//this position holds newPoint
+							sp->pointArray[position] = *newPoint;
+							//shift everything else over
+							sp_shiftPoints(sp, position);
+
+							break;
+						} 
+					}
+
+					else if (point_getX(newPoint) < point_getX(tempPointer))
+					{
+						//this position holds newPoint
+						sp->pointArray[position] = *newPoint;
+						//shift everything else over
+						sp_shiftPoints(sp, position);
+
+						break;
+					}
+				}
+
+				else if (point_distance(originPointer, newPoint) < point_distance(originPointer, tempPointer))
+				{
+					//this position holds newPoint
+					sp->pointArray[position] = *newPoint;
+					//shift everything else over
+					sp_shiftPoints(sp, position);
+
+					break;
+				}
+
+			}
 		
 		}		
 
+		sp->size = sp->size + 1;
 		return 1;
 	}
         
 	
+}
+
+void sp_shiftPoints(SortedPoints *sp, int position)
+{
+
+	//stub
+
 }
 
 /*

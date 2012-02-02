@@ -74,22 +74,22 @@ fact.o: fact.c
 	$(CC) $(CFLAGS) -c -o fact.o fact.c
 
 testPoint: testPoint.o point.o
-	$(CC) $(CFLAGS) -o testPoint testPoint.o point.o
+	$(CC) $(CFLAGS) -o testPoint testPoint.o point.o -lm
 
 testPoint.o: testPoint.c point.h
-	$(CC) $(CFLAGS) -c -o testPoint.o testPoint.c
+	$(CC) $(CFLAGS) -c -o testPoint.o testPoint.c -lm
 
 point.o: point.c point.h
-	$(CC) $(CFLAGS) -c -o point.o point.c
+	$(CC) $(CFLAGS) -c -o point.o point.c -lm
 
 sortedPoints.o: sortedPoints.c sortedPoints.h point.h
-	$(CC) $(CFLAGS) -c -o sortedPoints.o sortedPoints.c
+	$(CC) $(CFLAGS) -c -o sortedPoints.o sortedPoints.c -lm
 
 testSortedPoints.o: testSortedPoints.c 
-	$(CC) $(CFLAGS) -c -o testSortedPoints.o testSortedPoints.c
+	$(CC) $(CFLAGS) -c -o testSortedPoints.o testSortedPoints.c -lm
 
 testSortedPoints: testSortedPoints.o point.o sortedPoints.o
-	$(CC) $(CFLAGS) -o testSortedPoints testSortedPoints.o point.o sortedPoints.o
+	$(CC) $(CFLAGS) -o testSortedPoints testSortedPoints.o point.o sortedPoints.o -lm
 
 execUs: execUs.o
 	$(CC) $(CFLAGS) -o execUs execUs.o

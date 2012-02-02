@@ -20,6 +20,10 @@ int main(int argc, char **argv)
   int ret = sp_addNewPoint(sp1, 1.0, 1.0);
   assert(ret);
 
+  Point temp = sp1->pointArray[0];
+
+  printf("sp1 first: (%f, %f)\n", point_getX(&temp), point_getY(&temp));
+
   /*
   ret =   sp_addNewPoint(sp2, 3.0, 1.0);
   assert(ret);

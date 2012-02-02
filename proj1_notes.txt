@@ -1,0 +1,26 @@
+Notes:
+- for getting args from command line in a for loop, start from i=1 (i=0 is filename)
+- char** argc is pointer to pointer of character (pointer to character array)
+- to convert variable to integer use atoi and to check if successful use isdigit (both functions in stdlib.h)
+- declare functions before putting body
+- when declaring malloc, returns a void * pointer so need to cast to primitive or struct you need
+
+Point *aPoint = (Point*)malloc(sizeof(Point));
+
+Tests to consider:
+1. hello
+
+2. words
+- no arguments
+- special characters
+- 
+
+3. fact
+
+./fact 
+
+- no argument: "Huh?"
+- negative or 0 integer: "Huh?"
+- non-integer input: "Huh?"
+- integer>12: "Overflow"
+- more than 1 argument (e.g. 4 2): could print how to put valid input
