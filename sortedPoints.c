@@ -270,10 +270,29 @@ int sp_removeLast(SortedPoints *sp, Point *ret)
   */
 int sp_removeIndex(SortedPoints *sp, int index, Point *ret)
 {
+	if (sp->size == 0)
+		return 0;
 
-  //don't forget to free point!
-  assert(0); // TBD
-  return 0;
+	else
+	{
+		int i;
+
+		sp->size = sp->size - 1;
+		*ret = sp->pointArray[index];
+
+		printf("funct removeIndex %d ret: (%f, %f)\n", index, point_getX(ret), point_getY(ret));
+
+		sp->used[sp->size] = 'n';
+
+		for (i = index; i < sp->size; i++)
+		{
+			sp->pointArray[i] = sp->pointArray[i+1];
+		}
+
+		point_set(&(sp->pointArray[sp->size]), 0.0, 0.0);
+		return 1;
+
+	}
 }
 
 
