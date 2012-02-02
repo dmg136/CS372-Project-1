@@ -17,12 +17,38 @@ int main(int argc, char **argv)
   assert(sp1);
   sp_init(sp1);
 
-  int ret = sp_addNewPoint(sp1, 1.0, 1.0);
+  int ret = sp_addNewPoint(sp1, 2.0, 2.0);
   assert(ret);
 
-  Point temp = sp1->pointArray[0];
+  ret =   sp_addNewPoint(sp1, 3.0, 4.0);
+  assert(ret);
+
+  ret =   sp_addNewPoint(sp1, 1.0, 1.0);
+  assert(ret);
+
+  ret =   sp_addNewPoint(sp1, 2.0, 1.0);
+  assert(ret);
+
+  ret =   sp_addNewPoint(sp1, 1.0, 2.0);
+  assert(ret);
+
+  ret =   sp_addNewPoint(sp1, 2.0, 2.0);
+  assert(ret);
+
+  Point temp = (sp1->pointArray)[0];
+  Point temp2 = (sp1->pointArray)[1];
+  Point temp3 = (sp1->pointArray)[2];
+  Point temp4 = (sp1->pointArray)[3];
+  Point temp5 = (sp1->pointArray)[4];
+  Point temp6 = (sp1->pointArray)[5];
+
 
   printf("sp1 first: (%f, %f)\n", point_getX(&temp), point_getY(&temp));
+  printf("sp1 second: (%f, %f)\n", point_getX(&temp2), point_getY(&temp2));
+  printf("sp1 third: (%f, %f)\n", point_getX(&temp3), point_getY(&temp3));
+  printf("sp1 fourth: (%f, %f)\n", point_getX(&temp4), point_getY(&temp4));
+  printf("sp1 fifth: (%f, %f)\n", point_getX(&temp5), point_getY(&temp5));
+  printf("sp1 sixth: (%f, %f)\n", point_getX(&temp6), point_getY(&temp6));
 
   /*
   ret =   sp_addNewPoint(sp2, 3.0, 1.0);
