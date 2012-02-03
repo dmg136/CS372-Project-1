@@ -17,12 +17,7 @@ int main(int argc, char** argv)
 
 	char *error;
 
-	//printf("argv[1]: %s\n", argv[1]);
-
 	long int number = strtol(argv[1], &error, 10);
-
-	//printf("number: %ld\n", number);
-	//printf("error: %s\n", error);
 
 	if (error == argv[1])
 	{
