@@ -7,6 +7,31 @@ Notes:
 
 Point *aPoint = (Point*)malloc(sizeof(Point));
 
+Pointer craziness
+-----------------
+
+//how to modify variable within a function
+function(*variable){
+
+   *variable = whatever...;
+
+   NOT variable = &whatever..."; //this is to get ADDRESS of whatever
+
+}
+
+
+for sortedPoints testing
+-----------------------
+rm *.o
+make all
+
+gcc -o sortedPoints sortedPoints.c point.o testPoint.o -lm
+gcc -o myTestSP myTestSP.c point.o sortedPoints.o -lm
+
+printf("---------------- size %d ----------------\n", sp->size);
+sp_printArray(sp);
+
+
 Tests to consider:
 1. hello
 
@@ -24,3 +49,14 @@ Tests to consider:
 - non-integer input: "Huh?"
 - integer>12: "Overflow"
 - more than 1 argument (e.g. 4 2): could print how to put valid input
+
+Todo:
+removeFirst [x]
+removeLast  [x]
+removeIndex [x]
+deleteDuplicates
+- still not working!
+
+and of course exec/fork
+
+and make sure in sortedPoints that you free any points not in the list?
