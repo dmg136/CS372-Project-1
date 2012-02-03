@@ -109,7 +109,6 @@ int sp_addNewPoint(SortedPoints *sp, double x, double y)
 
 							printf("%d new point placePos coord (%f, %f)\n", placePos, point_getX(newPoint), point_getY(newPoint));
 
-
 							break;
 						}
 
@@ -160,8 +159,12 @@ int sp_addNewPoint(SortedPoints *sp, double x, double y)
 				printf("%d newPoint past all ifs\n", position);
 
 			}
+
+			//free(newPoint);
 		}		
 
+		free(newPoint);
+		//free(originPointer);
 		sp->used[sp->size] = 'y';
 		sp->size = sp->size + 1;
 
@@ -180,6 +183,8 @@ void sp_shiftPoints(SortedPoints *sp, int position)
 	printf("shiftPoints position %d\n", position);
 
 	int i;
+
+	//free(&(sp->pointArray[9]));
 
 	for (i = 9; i > position; i--)
 	{
@@ -200,6 +205,13 @@ void sp_printArray(SortedPoints *sp)
 		printf("%d: (%f, %f)\n", i, point_getX(&temp), point_getY(&temp));
 	}
 
+	for (i = 0; i < 10; i++)
+	{
+		printf("[ %c ] ", sp->used[i]);
+	}
+
+	printf("\n");
+
 }
 
 /*
@@ -211,8 +223,13 @@ void sp_printArray(SortedPoints *sp)
 int sp_removeFirst(SortedPoints *sp, Point *ret)
 {
 
-	if (sp->size == 0)
+	if (sp->size == 0 || sp->used[0] == 'n')
+	{
+		if (NULL != ret)
+			point_set(ret, 0.0, 0.0);
+
 		return 0;
+	}
 
 	else
 	{
@@ -220,9 +237,11 @@ int sp_removeFirst(SortedPoints *sp, Point *ret)
 		int i;
 
 		sp->size = sp->size - 1;
-		*ret = sp->pointArray[0];
 
-		printf("funct removeFirst ret: (%f, %f)\n", point_getX(ret), point_getY(ret));
+		if (NULL != ret)
+			*ret = sp->pointArray[0];
+
+		//printf("funct removeFirst ret: (%f, %f)\n", point_getX(ret), point_getY(ret));
 
 		sp->used[sp->size] = 'n';
 
@@ -232,7 +251,7 @@ int sp_removeFirst(SortedPoints *sp, Point *ret)
 		}
 
 		point_set(&(sp->pointArray[sp->size]), 0.0, 0.0);
-		//free(&(sp->pointArray)[sp->size]);
+		//free(&(sp->pointArray)[0]);
 		return 1;
 	}
 }
@@ -246,15 +265,30 @@ int sp_removeFirst(SortedPoints *sp, Point *ret)
 int sp_removeLast(SortedPoints *sp, Point *ret)
 {
 	if (sp->size == 0)
+	{
+		if (NULL != ret)
+			point_set(ret, 0.0, 0.0);
+
 		return 0;
+	}
+
+	else if (sp->used[sp->size - 1] == 'n')
+	{
+		if (NULL != ret)
+			point_set(ret, 0.0, 0.0);
+		return 0;
+	}
 
 	else
 	{
 
 		sp->size = sp->size - 1;
-		*ret = sp->pointArray[sp->size];
+
+		if (NULL != ret)
+			*ret = sp->pointArray[sp->size];
+
 		point_set(&(sp->pointArray[sp->size]), 0.0, 0.0);
-		//free(&(sp->pointArray)[sp->size]);
+		//free(&(sp->pointArray[sp->size]));
 		sp->used[sp->size] = 'n';
 		return 1;
 	}
@@ -270,17 +304,32 @@ int sp_removeLast(SortedPoints *sp, Point *ret)
   */
 int sp_removeIndex(SortedPoints *sp, int index, Point *ret)
 {
-	if (sp->size == 0)
+	if (sp->size == 0 || index < 0 || index > 10)
+	{
+		if (NULL != ret)
+			point_set(ret, 0.0, 0.0);
 		return 0;
+	}
+
+	else if (sp->used[index] == 'n')
+	{
+		if (NULL != ret)
+			point_set(ret, 0.0, 0.0);
+		return 0;
+	}
 
 	else
 	{
 		int i;
 
 		sp->size = sp->size - 1;
-		*ret = sp->pointArray[index];
 
-		printf("funct removeIndex %d ret: (%f, %f)\n", index, point_getX(ret), point_getY(ret));
+		if (NULL != ret)
+			*ret = sp->pointArray[index];
+
+		//printf("funct removeIndex %d ret: (%f, %f)\n", index, point_getX(ret), point_getY(ret));
+
+		//free(&(sp->pointArray[index]));
 
 		sp->used[sp->size] = 'n';
 
@@ -290,6 +339,7 @@ int sp_removeIndex(SortedPoints *sp, int index, Point *ret)
 		}
 
 		point_set(&(sp->pointArray[sp->size]), 0.0, 0.0);
+		//free(&(sp->pointArray[sp->size]));
 		return 1;
 
 	}
@@ -304,8 +354,42 @@ int sp_removeIndex(SortedPoints *sp, int index, Point *ret)
   */
 int sp_deleteDuplicates(SortedPoints *sp)
 {
-  assert(0); // TBD
-  return -1;
+  int numRecordsDel = 0;
+  int i, j;
+
+  Point temp;
+  Point temp2;
+
+  for (i = 0; i < 10; i++)
+  {
+
+	temp = sp->pointArray[i];
+
+	if (sp->used[i] == 'y')
+	{
+		j=i+1;
+
+		if (sp->used[j] == 'y')
+		{
+
+			temp2 = sp->pointArray[j];
+
+			while (point_getX(&temp) == point_getX(&temp2) && point_getY(&temp) == point_getY(&temp2))
+			{
+
+				sp_removeIndex(sp, j, (Point*)NULL);
+
+				printf("***********************************");
+				sp_printArray(sp);
+
+				temp2 = sp->pointArray[j];
+			}
+		}
+	}
+  }
+
+  return numRecordsDel;
+
 }
 
 
